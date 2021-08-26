@@ -51,6 +51,28 @@ SELECT P.PNUMBER,P.PNAME,COUNT(E.SSN) AS NO_OF_EMPLOYEES FROM WORK_IN W JOIN PRO
 SELECT P.PNUMBER,P.PNAME,D.DNUMBER,COUNT(E.SSN) FROM PROJ P JOIN DEPARTMENT D  ON D.DNUMBER=P.DNUM JOIN EMPLOYEE E ON E.DNO=P.DNUM 
 GROUP BY P.PNAME,P.PNUMBER,D.DNUMBER HAVING D.DNUMBER=5;
 
+#6. For the departments having more than five employees, display the department id and the number and details of employees earning more than Rs 40,000 per month.
+SELECT D.DNAME,D.DNUMBER,E.SSN,E.ENAME,E.DESIGN,E.DOJ,E.SALARY FROM DEPARTMENT D, EMPLOYEE E WHERE
+(SELECT COUNT(*) FROM EMPLOYEE E WHERE E.DNO=D.DNUMBER AND E.SALARY>40000)>4 AND E.DNO=D.DNUMBER 
+GROUP BY D.DNAME,D.DNUMBER,E.SSN,E.ENAME,E.DESIGN,E.DOJ,E.SALARY;
+
+#7. Create a synonym for the VIEW created on natural join of emp and dept tables.
+create VIEW emp_dept_view as select * from employee NATURAL JOIN department;
+
+#8. (a)Display the employee details, departments that the departments are same in both the emp and dept. (Equi-join)
+SELECT * FROM EMPLOYEE E,DEPARTMENT D WHERE E.DNO=D.DNUMBER;
+
+#(b)Display the employee details, departments that the departments are not same in both the emp and dept. (Non Equi-join)
+SELECT DISTINCT * FROM EMPLOYEE E,DEPARTMENT D WHERE NOT(E.DNO=D.DNUMBER);
+
+#(c)Perform Left outer join on the emp and dept tables.
+SELECT * FROM EMPLOYEE E LEFT OUTER JOIN DEPARTMENT D ON E.DNO=D.DNUMBER;
+
+#(d)Perform Right outer join on the emp and dept tables.
+SELECT * FROM EMPLOYEE E RIGHT OUTER JOIN DEPARTMENT D ON E.DNO=D.DNUMBER;
+
+#(e) Perform inner join on the emp and dept tables.
+SELECT * FROM EMPLOYEE E INNER JOIN DEPARTMENT D ON E.DNO=D.DNUMBER;
 
 
 
